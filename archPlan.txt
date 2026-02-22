@@ -12,3 +12,6 @@ also maybe not call malloc in the stack implementation and let it live on the st
 
 maybe add NULL checks to all functions inside stack.h
 good defensive programming practice
+
+make note of error messages in stack_pop() function.
+maybe in the future you'd want to move them to interpreter.c for consistency

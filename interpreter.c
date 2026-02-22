@@ -55,6 +55,7 @@ int main(int argc, char *argv[]) {
                 else {
                         int closer_position = stack_pop(validation_stack);
                         if (closer_position == -1) {
+                                free(validation_stack);
                                 return 1;
                         }
 
@@ -62,6 +63,14 @@ int main(int argc, char *argv[]) {
                         char_idx++;
                 }
         }
+
+        if (stack_empty(validation_stack) == 0) {
+                fprintf(stderr, "bracket mismatch\n");
+                free(validation_stack);
+                return 1;
+        }
+
+        free(validation_stack);
 
         fclose(bf_fileptr);
         return 0;
