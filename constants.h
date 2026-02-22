@@ -1,3 +1,6 @@
+#ifndef CONSTANTS_H
+#define CONSTANTS_H
+
 /*
 The constants header defines constants which might be re-used multiple times
 in the interpreter and else-where so it's good to have them all in one place.
@@ -8,3 +11,5 @@ in the interpreter and else-where so it's good to have them all in one place.
 
 // size in bytes, ideally 7 bits (< 1 byte) to support ASCII for now we go with 1
 #define CELL_SIZE 1
+
+#endif
