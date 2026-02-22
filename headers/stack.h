@@ -14,15 +14,15 @@ struct Stack {
 typedef struct Stack Stack;
 
 Stack *stack_init(void) {
-        Stack *stack = (Stack *) malloc(sizeof(Stack));
+        Stack *self = (Stack *) malloc(sizeof(Stack));
 
-        if (stack == NULL) {
+        if (self == NULL) {
                 fprintf(stderr, "couldn't initialize stack\n");
                 return NULL;
         }
 
-        stack->top = -1;
-        return stack;
+        self->top = -1;
+        return self;
 }
 
 int stack_empty(Stack *self) {
