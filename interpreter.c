@@ -40,6 +40,7 @@ int main(int argc, char *argv[]) {
 
         Stack *validation_stack = stack_init();
         if (validation_stack == NULL) {
+                free(cell_array);
                 return 1;
         }
 
@@ -51,7 +52,12 @@ int main(int argc, char *argv[]) {
                 }
                 
                 else if (curr_char == '[') {
-                        stack_push(validation_stack, char_idx);
+                        int push = stack_push(validation_stack, char_idx);
+                        if (push == -1) {
+                                free(validation_stack);
+                                free(cell_array);
+                                return 1;
+                        }
                         char_idx++;
                 }
 
@@ -59,6 +65,7 @@ int main(int argc, char *argv[]) {
                         int closer_position = stack_pop(validation_stack);
                         if (closer_position == -1) {
                                 free(validation_stack);
+                                free(cell_array);
                                 return 1;
                         }
 
@@ -71,6 +78,7 @@ int main(int argc, char *argv[]) {
         if (stack_empty(validation_stack) == 0) {
                 fprintf(stderr, "bracket mismatch\n");
                 free(validation_stack);
+                free(cell_array);
                 return 1;
         }
 
@@ -127,8 +135,10 @@ int main(int argc, char *argv[]) {
                         // handling comments
                         break;
                 }
-        } printf("\n"); 
+        }
+        printf("\n"); 
 
+        free(cell_array);
         fclose(bf_fileptr);
         return 0;
 }

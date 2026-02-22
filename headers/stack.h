@@ -35,14 +35,15 @@ int stack_full(Stack *self) {
         return 0;
 }
 
-void stack_push(Stack *self, int data) {
+int stack_push(Stack *self, int data) {
         if (stack_full(self) == 1) {
                 fprintf(stderr, "stack overflow\n");
-                return;
+                return -1;
         }
 
         self->top++;
         self->stack[self->top] = data;
+        return 0;
 }
 
 int stack_pop(Stack *self) {
