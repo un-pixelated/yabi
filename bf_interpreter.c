@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "constants.h"
 
 int main(int argc, char *argv[]) {
@@ -15,7 +16,11 @@ int main(int argc, char *argv[]) {
                 return 1;
         }
 
-        int cell_array[ARRAY_LENGTH];
+        char *cell_array = calloc(ARRAY_LENGTH, CELL_SIZE);
+        if (cell_array == NULL) {
+                fprintf(stderr, "couldn't allocate memory\n");
+                return 1;
+        }
 
         int curr_char;
         while ((curr_char = fgetc(bf_fileptr)) != EOF) {
