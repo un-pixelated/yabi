@@ -11,7 +11,7 @@ int main(int argc, char *argv[]) {
                 return 1;
         }
 
-        if (!validate_ext(argv[1])) {
+        if (validate_ext(argv[1]) == 0) {
                 fprintf(stderr, "%s is not a valid brainfuck file\nfile extension must be .bf\n", argv[1]);
                 return 1;
         }
@@ -29,12 +29,38 @@ int main(int argc, char *argv[]) {
         }
 
         int curr_char;
-        int char_num = 0;
-        int bracket_map[ARRAY_LENGTH];
-        while ((curr_char = fgetc(bf_fileptr)) != EOF) {
-                if (curr_char != '[' && curr_char != ']') {}
 
+        int char_idx = 0;
+        
+        // bracket_map[position of opening bracket] = position of closing bracket
+        // bracket_map[ '[' ] = ']' (but int positions)
+        int bracket_map[ARRAY_LENGTH];
+
+        Stack *validation_stack = stack_init();
+        if (validation_stack == NULL) {
+                return 1;
+        }
+
+        while ((curr_char = fgetc(bf_fileptr)) != EOF) {
+                if (curr_char != '[' && curr_char != ']') {
+                        char_idx++;
+                        continue;
+                }
                 
+                else if (curr_char == '[') {
+                        stack_push(validation_stack, char_idx);
+                        char_idx++;
+                }
+
+                else {
+                        int closer_position = stack_pop(validation_stack);
+                        if (closer_position == -1) {
+                                return 1;
+                        }
+
+                        bracket_map[closer_position] = char_idx;
+                        char_idx++;
+                }
         }
 
         fclose(bf_fileptr);
