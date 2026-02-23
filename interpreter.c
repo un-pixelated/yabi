@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
         }
 
         if (validate_ext(argv[1]) == 0) {
-                fprintf(stderr, "error: %s is not a valid brainfuck file\n      file extension must be .bf\n", argv[1]);
+                fprintf(stderr, "error: %s is not a valid brainfuck file\n       file extension must be .bf\n", argv[1]);
                 return 1;
         }
 

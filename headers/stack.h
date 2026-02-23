@@ -17,7 +17,7 @@ Stack *stack_init(void) {
         Stack *self = (Stack *) malloc(sizeof(Stack));
 
         if (self == NULL) {
-                fprintf(stderr, "couldn't initialize stack\n");
+                fprintf(stderr, "error: couldn't initialize stack\n");
                 return NULL;
         }
 
@@ -37,7 +37,7 @@ int stack_full(Stack *self) {
 
 int stack_push(Stack *self, int data) {
         if (stack_full(self) == 1) {
-                fprintf(stderr, "stack overflow\n");
+                fprintf(stderr, "error: stack overflow\n");
                 return -1;
         }
 
@@ -48,7 +48,7 @@ int stack_push(Stack *self, int data) {
 
 int stack_pop(Stack *self) {
         if (stack_empty(self) == 1) {
-                fprintf(stderr, "stack underflow\n");
+                fprintf(stderr, "error: stack underflow\n");
                 return -1;
         }
 
