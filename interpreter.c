@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
         }
 
         if (validate_ext(argv[1]) == 0) {
-                fprintf(stderr, "%s is not a valid brainfuck file\nfile extension must be .bf\n", argv[1]);
+                fprintf(stderr, "error: %s is not a valid brainfuck file\n      file extension must be .bf\n", argv[1]);
                 return 1;
         }
 
@@ -21,6 +21,13 @@ int main(int argc, char *argv[]) {
                 perror(argv[1]);
                 return 1;
         }
+
+        if (fgetc(bf_fileptr) == EOF) {
+                fprintf(stderr, "error: empty file\n");
+                fclose(bf_fileptr);
+                return 1;
+        }
+        else rewind(bf_fileptr);
 
         char *cell_array = calloc(ARRAY_LENGTH, CELL_SIZE);
         if (cell_array == NULL) {
