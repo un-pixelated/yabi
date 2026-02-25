@@ -22,8 +22,6 @@ int build_bracket_map(int *bracket_map, Stack *validation_stack, FILE *bf_filept
                 else if (curr_char == '[') {
                         int push = stack_push(validation_stack, char_idx);
                         if (push == -1) {
-                                free_memory(bracket_map, validation_stack, NULL);
-                                fclose(bf_fileptr);
                                 return 1;
                         }
                         char_idx++;
@@ -32,8 +30,6 @@ int build_bracket_map(int *bracket_map, Stack *validation_stack, FILE *bf_filept
                 else {
                         int closer_position = stack_pop(validation_stack);
                         if (closer_position == -1) {
-                                free_memory(bracket_map, validation_stack, NULL);
-                                fclose(bf_fileptr);
                                 return 1;
                         }
 
@@ -45,8 +41,6 @@ int build_bracket_map(int *bracket_map, Stack *validation_stack, FILE *bf_filept
 
         if (stack_empty(validation_stack) == 0) {
                 fprintf(stderr, ERR_BRACKET_MISMATCH);
-                free_memory(bracket_map, validation_stack, NULL);
-                fclose(bf_fileptr);
                 return 1;
         }
 

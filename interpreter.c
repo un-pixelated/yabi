@@ -36,7 +36,10 @@ int main(int argc, char *argv[]) {
         }
 
         // pass 1
-        if (build_bracket_map(bracket_map, validation_stack, bf_fileptr) == 1) return 1;
+        if (build_bracket_map(bracket_map, validation_stack, bf_fileptr) == 1) {
+                free_memory(bracket_map, validation_stack, NULL);
+                fclose(bf_fileptr);
+        }
         free_memory(validation_stack, NULL);
 
         char *cell_array = calloc(CELL_ARRAY_LENGTH, CELL_SIZE);
