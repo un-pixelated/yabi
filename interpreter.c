@@ -26,7 +26,8 @@ int main(int argc, char *argv[]) {
         
         // bracket_map[position of opening bracket] = position of closing bracket
         // bracket_map[position of closing bracket] = position of opening bracket
-        int bracket_map[MAP_LEN];
+        int *bracket_map = malloc(MAP_LEN);
+        if (memory_allocation_check(bracket_map) == 1) return 1;
 
         Stack *validation_stack = stack_init();
         if (memory_allocation_check(validation_stack) == 1) return 1;
