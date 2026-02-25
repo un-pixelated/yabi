@@ -5,6 +5,7 @@
 #include <stdlib.h>
 
 #include "constants.h"
+#include "error_messages.h"
 
 struct Stack {
         int stack[STACK_SIZE];
@@ -17,7 +18,7 @@ Stack *stack_init(void) {
         Stack *self = (Stack *) malloc(sizeof(Stack));
 
         if (self == NULL) {
-                fprintf(stderr, "error: couldn't initialize stack\n");
+                fprintf(stderr, ERR_STACK_INIT_FAILURE);
                 return NULL;
         }
 
@@ -37,7 +38,7 @@ int stack_full(Stack *self) {
 
 int stack_push(Stack *self, int data) {
         if (stack_full(self) == 1) {
-                fprintf(stderr, "error: stack overflow\n");
+                fprintf(stderr, ERR_STACK_OVERFLOW);
                 return -1;
         }
 
@@ -48,7 +49,7 @@ int stack_push(Stack *self, int data) {
 
 int stack_pop(Stack *self) {
         if (stack_empty(self) == 1) {
-                fprintf(stderr, "error: stack underflow\n");
+                fprintf(stderr, ERR_STACK_UNDERFLOW);
                 return -1;
         }
 
