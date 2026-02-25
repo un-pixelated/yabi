@@ -16,13 +16,14 @@ int memory_allocation_check(void *ptr) {
         else return 0;
 }
 
-void free_memory(int count, ...) {
-    va_list args;
-    va_start(args, count);
-    for (int i = 0; i < count; i++) {
-        free(va_arg(args, void *));
-    }
-    va_end(args);
+void free_memory(void *ptr, ...) {
+        va_list args;
+        va_start(args, ptr);
+        while (ptr != NULL) {
+                free(ptr);
+                ptr = va_arg(args, void *);
+        }
+        va_end(args);
 }
 
 #endif
