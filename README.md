@@ -1,23 +1,77 @@
-yabi - yet another brainfuck interpreter.
+# yabi — yet another brainfuck interpreter
 
-So this was a project I've been wanting to make for quite a while now
-And so I sat down one day and decided to build it, and it's here.
-It's not as polished as some other intepreters out there, I mean it's just two
-while loops and kind of a menu interpreter, but it works. And it's pretty fast because it's
-written in C.
+A fast, lightweight brainfuck interpreter written in C.
 
-Getting started with brainfuck:
+## Building
 
-A good YouTube video by fireship which does a really godo job at telling you about the history of the language and how it works: https://www.youtube.com/watch?v=hdHjjBS4cs8
+```bash
+gcc interpreter.c -o yabi
+```
 
-If you are a fan of written tutorials you can read this article: https://learnxinyminutes.com/bf/
+## Usage
 
-Interpreter spec:
-length of cell array is 30000
-the amount of data which can be stored in a cell is 7 bits, so 0 to 127
-and it wraps around
+```bash
+./yabi file.bf
+```
 
-and the cell array also wraps around if you move ahead at the end of the cell array or
-if you move behind at the beginning of the cell array
+## Interpreter Spec
 
-The stack's max size is 1024 and that's the nesting depth of the loops
+| Property               | Value                       |
+| ---------------------- | --------------------------- |
+| Cell array length      | 30,000                      |
+| Cell value range       | 0–127 (7-bit, wraps around) |
+| Cell array             | Wraps around at both ends   |
+| Max loop nesting depth | 1024                        |
+
+## How it works
+
+yabi uses a two-pass approach:
+
+- **Pass 1** — Scans the file and builds a bracket map, precomputing the matching position of every `[` and `]` so jumps are O(1) during execution.
+- **Pass 2** — Executes the program using the bracket map for loop handling.
+
+## Brainfuck Resources
+
+- [Fireship video](https://www.youtube.com/watch?v=hdHjjBS4cs8) — great introduction to the language and its history
+- [Learn X in Y Minutes](https://learnxinyminutes.com/bf/) — quick written reference
+
+## Supported Commands
+
+| Command | Description                                          |
+| ------- | ---------------------------------------------------- |
+| `>`     | Move to next cell (wraps around)                     |
+| `<`     | Move to previous cell (wraps around)                 |
+| `+`     | Increment current cell (wraps around)                |
+| `-`     | Decrement current cell (wraps around)                |
+| `.`     | Output current cell as ASCII                         |
+| `,`     | Accept one byte of input                             |
+| `[`     | Jump past matching `]` if current cell is 0          |
+| `]`     | Jump back to matching `[` if current cell is nonzero |
+
+Any other character is treated as a comment and ignored.
+
+## Some cool bits
+
+**Variadic `free_memory()` using a sentinel NULL**
+
+Instead of passing a count, `free_memory()` walks through its arguments and stops when it hits a `NULL` sentinel — similar to how `execl` works. This keeps callsites clean:
+
+```c
+free_memory(bracket_map, validation_stack, cell_array, NULL);
+```
+
+**`extension_checker()` pointer walking**
+
+Rather than using `strlen` or indexing, `extension_checker()` walks the filename character by character using pointer arithmetic. Short circuit evaluation on null terminator checks keeps it memory safe without any bounds checking overhead.
+
+**Two-pass O(1) bracket jumping**
+
+Most brainfuck interpreters scan forward or backward through the file at runtime to find matching brackets. yabi does a first pass to precompute a `bracket_map` so every `[` and `]` jump is O(1) during execution — no scanning at all.
+
+## Why I made this
+
+I started working on this to see whether I write could safe and clean C code and just learn a lot in general. I get this might not be the most complex of projects but I still learnt a lot about writing clean and structured code and I believe I am now ready to re-write this in C++ and learn OOP.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
