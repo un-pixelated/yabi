@@ -19,7 +19,10 @@ int main(int argc, char *argv[]) {
         if (validate_file_not_empty(&bf_fileptr, fgetc(bf_fileptr)) == 1) return 1;
 
         char *cell_array = calloc(ARRAY_LENGTH, CELL_SIZE);
-        if (memory_allocation_check(cell_array) == 1) return 1;
+        if (memory_allocation_check(cell_array) == 1) {
+                fclose(bf_fileptr);
+                return 1;
+        }
 
         int curr_char;
         int char_idx = 0;
@@ -27,10 +30,16 @@ int main(int argc, char *argv[]) {
         // bracket_map[position of opening bracket] = position of closing bracket
         // bracket_map[position of closing bracket] = position of opening bracket
         int *bracket_map = malloc(MAP_LEN * sizeof(int));
-        if (memory_allocation_check(bracket_map) == 1) return 1;
+        if (memory_allocation_check(bracket_map) == 1) {
+                fclose(bf_fileptr);
+                return 1;
+        }
 
         Stack *validation_stack = stack_init();
-        if (memory_allocation_check(validation_stack) == 1) return 1;
+        if (memory_allocation_check(validation_stack) == 1) {
+                fclose(bf_fileptr);
+                return 1;
+        }
 
         // pass 1
         while ((curr_char = fgetc(bf_fileptr)) != EOF) {
@@ -43,6 +52,7 @@ int main(int argc, char *argv[]) {
                         int push = stack_push(validation_stack, char_idx);
                         if (push == -1) {
                                 free_memory(bracket_map, validation_stack, cell_array, NULL);
+                                fclose(bf_fileptr);
                                 return 1;
                         }
                         char_idx++;
@@ -52,6 +62,7 @@ int main(int argc, char *argv[]) {
                         int closer_position = stack_pop(validation_stack);
                         if (closer_position == -1) {
                                 free_memory(bracket_map, validation_stack, cell_array, NULL);
+                                fclose(bf_fileptr);
                                 return 1;
                         }
 
@@ -64,6 +75,7 @@ int main(int argc, char *argv[]) {
         if (stack_empty(validation_stack) == 0) {
                 fprintf(stderr, "bracket mismatch\n");
                 free_memory(bracket_map, validation_stack, cell_array, NULL);
+                fclose(bf_fileptr);
                 return 1;
         }
 
@@ -147,8 +159,7 @@ int main(int argc, char *argv[]) {
         }
         printf("\n"); 
 
-        free(bracket_map);
-        free(cell_array);
+        free_memory(bracket_map, cell_array, NULL);
         fclose(bf_fileptr);
         return 0;
 }
