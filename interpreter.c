@@ -7,19 +7,19 @@
 #include "./headers/memory_management.h"
 
 int main(int argc, char *argv[]) {
-        if (validate_number_of_arguments(argc, argv[0]) == 1) exit(1);
+        if (validate_number_of_arguments(argc, argv[0]) == 1) return 1;
         
         char *filename = argv[1];
 
-        if (validate_file_extension(filename) == 1) exit(1);
+        if (validate_file_extension(filename) == 1) return 1;
 
         FILE *bf_fileptr = fopen(filename, "r");
-        if (validate_file_exists(bf_fileptr, filename) == 1) exit(1);
+        if (validate_file_exists(bf_fileptr, filename) == 1) return 1;
 
-        if (validate_file_not_empty(&bf_fileptr, fgetc(bf_fileptr)) == 1) exit(1);
+        if (validate_file_not_empty(&bf_fileptr, fgetc(bf_fileptr)) == 1) return 1;
 
         char *cell_array = calloc(ARRAY_LENGTH, CELL_SIZE);
-        if (memory_allocation_check(cell_array) == 1) exit(1);
+        if (memory_allocation_check(cell_array) == 1) return 1;
 
         int curr_char;
         int char_idx = 0;
@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
         int bracket_map[MAP_LEN];
 
         Stack *validation_stack = stack_init();
-        if (memory_allocation_check(validation_stack) == 1) exit(1);
+        if (memory_allocation_check(validation_stack) == 1) return 1;
 
         // pass 1
         while ((curr_char = fgetc(bf_fileptr)) != EOF) {
