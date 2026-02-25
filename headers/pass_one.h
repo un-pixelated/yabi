@@ -2,11 +2,9 @@
 #define BUILD_BRACKET_MAP_H
 
 #include <stdio.h>
-#include <stdlib.h>
 
 #include "stack.h"
 #include "error_messages.h"
-#include "memory_management.h"
 
 int build_bracket_map(int *bracket_map, Stack *validation_stack, FILE *bf_fileptr) {
 

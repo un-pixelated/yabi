@@ -2,6 +2,7 @@
 #define INPUT_VALIDATION_H
 
 #include <stdio.h>
+
 #include "error_messages.h"
 
 int extension_checker(const char *filename) {

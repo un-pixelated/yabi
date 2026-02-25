@@ -2,6 +2,7 @@
 #define PASS_TWO_H
 
 #include <stdio.h>
+
 #include "constants.h"
 
 void interpret_brainfuck(FILE *bf_fileptr, char *cell_array, int *bracket_map) {
