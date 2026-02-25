@@ -40,13 +40,14 @@ int main(int argc, char *argv[]) {
 
         char *cell_array = calloc(CELL_ARRAY_LENGTH, CELL_SIZE);
         if (memory_allocation_check(cell_array) == 1) {
+                free_memory(bracket_map, NULL);
                 fclose(bf_fileptr);
                 return 1;
         }
 
         // pass 2
         rewind(bf_fileptr);
-        
+
         interpret_brainfuck(bf_fileptr, cell_array, bracket_map);
 
         free_memory(bracket_map, cell_array, NULL);
