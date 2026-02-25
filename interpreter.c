@@ -18,7 +18,7 @@ int main(int argc, char *argv[]) {
 
         if (validate_file_not_empty(&bf_fileptr, fgetc(bf_fileptr)) == 1) return 1;
 
-        char *cell_array = calloc(ARRAY_LENGTH, CELL_SIZE);
+        char *cell_array = calloc(CELL_ARRAY_LENGTH, CELL_SIZE);
         if (memory_allocation_check(cell_array) == 1) {
                 fclose(bf_fileptr);
                 return 1;
@@ -91,7 +91,7 @@ int main(int argc, char *argv[]) {
                 switch (curr_char) {
                         case '>':
                         // wraparound
-                        if (cell_ptr == ARRAY_LENGTH - 1) {
+                        if (cell_ptr == CELL_ARRAY_LENGTH - 1) {
                                 cell_ptr = 0;
                                 char_idx++;
                                 break;
@@ -103,7 +103,7 @@ int main(int argc, char *argv[]) {
                         case '<':
                         // wraparound
                         if (cell_ptr == 0) {
-                                cell_ptr = ARRAY_LENGTH - 1;
+                                cell_ptr = CELL_ARRAY_LENGTH - 1;
                                 char_idx++;
                                 break;
                         }
