@@ -7,9 +7,9 @@
 #include "./headers/memory_management.h"
 
 int main(int argc, char *argv[]) {
-        char *filename = argv[1];
-
         if (validate_number_of_arguments(argc, argv[0]) == 1) exit(1);
+        
+        char *filename = argv[1];
 
         if (validate_file_extension(filename) == 1) exit(1);
 
