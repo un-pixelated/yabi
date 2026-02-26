@@ -1,16 +1,9 @@
-#ifndef STACK_H
-#define STACK_H
-
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "constants.h"
-#include "error_messages.h"
-
-struct Stack {
-        int stack[STACK_SIZE];
-        int top;
-};
+#include "../include/constants.h"
+#include "../include/error_messages.h"
+#include "../include/stack.h"
 
 typedef struct Stack Stack;
 
@@ -56,5 +49,3 @@ int stack_pop(Stack *self) {
         self->top--;
         return self->stack[self->top + 1];
 }
-
-#endif

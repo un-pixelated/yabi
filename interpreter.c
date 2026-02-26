@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "./headers/constants.h"
-#include "./headers/input_validation.h"
-#include "./headers/memory_management.h"
-#include "./headers/pass_one.h"
-#include "./headers/pass_two.h"
+#include "./include/constants.h"
+#include "./include/input_validation.h"
+#include "./include/memory_management.h"
+#include "./include/pass_one.h"
+#include "./include/pass_two.h"
 
 int main(int argc, char *argv[]) {
         if (validate_number_of_arguments(argc, argv[0]) == 1) return 1;

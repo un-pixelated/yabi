@@ -1,11 +1,9 @@
-#ifndef MEMORY_MANAGEMENT_H
-#define MEMORY_MANAGEMENT_H
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
 
-#include "error_messages.h"
+#include "../include/error_messages.h"
+#include "../include/memory_management.h"
 
 int memory_allocation_check(void *ptr) {
         if (ptr == NULL) {
@@ -24,5 +22,3 @@ void free_memory(void *ptr, ...) {
         }
         va_end(args);
 }
-
-#endif

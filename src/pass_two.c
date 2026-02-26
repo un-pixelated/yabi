@@ -1,9 +1,7 @@
-#ifndef PASS_TWO_H
-#define PASS_TWO_H
-
 #include <stdio.h>
 
-#include "constants.h"
+#include "../include/constants.h"
+#include "../include/pass_two.h"
 
 void interpret_bf(FILE *bf_fileptr, int *bracket_map, char *cell_array) {
         
@@ -83,5 +81,3 @@ void interpret_bf(FILE *bf_fileptr, int *bracket_map, char *cell_array) {
         }
         printf("\n");
 }
-
-#endif

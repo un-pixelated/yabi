@@ -1,9 +1,7 @@
-#ifndef INPUT_VALIDATION_H
-#define INPUT_VALIDATION_H
-
 #include <stdio.h>
 
-#include "error_messages.h"
+#include "../include/error_messages.h"
+#include "../include/input_validation.h"
 
 int extension_checker(const char *filename) {
         while (*filename != '\0') {
@@ -61,5 +59,3 @@ int validate_file_not_empty(FILE **file_ptr, int file_character) {
         else rewind(*file_ptr);
         return 0;
 }
-
-#endif
