@@ -9,4 +9,6 @@ interpreter
 *.o
 *.out
 
-notes.txtbuild/
+notes.txt
+
+build/

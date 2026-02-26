@@ -2,6 +2,11 @@
 
 A fast, lightweight brainfuck interpreter written in C.
 
+## Requirements
+
+- C compiler (GCC or Clang)
+- CMake 3.10+
+
 ## Building
 
 ```bash
