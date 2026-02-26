@@ -38,6 +38,7 @@ int main(int argc, char *argv[]) {
         if (build_bracket_map(bf_fileptr, bracket_map, validation_stack) == 1) {
                 free_memory(bracket_map, validation_stack, NULL);
                 fclose(bf_fileptr);
+                return 1;
         }
         free_memory(validation_stack, NULL);
 
