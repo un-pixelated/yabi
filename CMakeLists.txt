@@ -4,12 +4,12 @@ project(yabi)
 set(CMAKE_C_STANDARD 17)
 
 add_executable( yabi
-        interpreter.c
-        src/input_validation.c
-        src/memory_management.c
-        src/stack.c
-        src/pass_one.c
-        src/pass_two.c
+        interpreter.cpp
+        src/input_validation.cpp
+        src/memory_management.cpp
+        src/stack.cpp
+        src/pass_one.cpp
+        src/pass_two.cpp
 )
 
 target_include_directories(yabi PRIVATE include)
