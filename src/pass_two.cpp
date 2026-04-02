@@ -1,0 +1,84 @@
+#include <iostream>
+#include <cstdio>
+
+#include "../include/constants.h"
+#include "../include/pass_two.h"
+
+void interpret_bf(FILE *bf_fileptr, int *bracket_map, char *cell_array) {
+    
+    int cell_ptr = 0;
+    int curr_char = 0;
+    int char_idx = 0;
+
+    while ((curr_char = std::fgetc(bf_fileptr)) != EOF) {
+        switch (curr_char) {
+            case '>':
+                // wraparound
+                if (cell_ptr == CELL_ARRAY_LENGTH - 1) {
+                    cell_ptr = 0;
+                    char_idx++;
+                    break;
+                }
+                cell_ptr++;
+                char_idx++;
+                break;
+
+            case '<':
+                // wraparound
+                if (cell_ptr == 0) {
+                    cell_ptr = CELL_ARRAY_LENGTH - 1;
+                    char_idx++;
+                    break;
+                }
+                cell_ptr--;
+                char_idx++;
+                break;
+
+            case '+':
+                cell_array[cell_ptr]++;
+                // cell wraparound
+                if (cell_array[cell_ptr] == -128) cell_array[cell_ptr] = 0;
+                char_idx++;
+                break;
+
+            case '-':
+                cell_array[cell_ptr]--;
+                // cell wraparound
+                if (cell_array[cell_ptr] == -1) cell_array[cell_ptr] = 127;
+                char_idx++;
+                break;
+
+            case '.':
+                std::printf("%c", cell_array[cell_ptr]);
+                char_idx++;
+                break;
+
+            case ',':
+                std::scanf("%c", &cell_array[cell_ptr]);
+                char_idx++;
+                break;
+            
+            case '[':
+                if (cell_array[cell_ptr] == 0) {
+                    char_idx = bracket_map[char_idx] + 1;
+                    std::fseek(bf_fileptr, char_idx, SEEK_SET);
+                }
+                else char_idx++;
+                break;
+
+            case ']':
+                if (cell_array[cell_ptr] != 0) {
+                    char_idx = bracket_map[char_idx] + 1;
+                    std::fseek(bf_fileptr, char_idx, SEEK_SET);
+                }
+                else char_idx++;
+                break;
+
+            default:
+                // handling comments
+                char_idx++;
+                break;
+        }
+    }
+    std::printf("\n");
+}
